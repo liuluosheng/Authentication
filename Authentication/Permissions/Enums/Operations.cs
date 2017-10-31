@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace Authentication.Permissions
 {
-    public enum ModuleName
+    public enum Operations
     {
-        关于我们,
-        产品中心
+        新建,
+        更新,
+        删除
     }
 }

@@ -39,9 +39,9 @@ namespace Authentication.Data
                     Id = roleId,
                     Name = "Admin",
                     CreatedDate = DateTime.Now,
-                    Permissions = JsonConvert.SerializeObject(new List<PermissionItem>() {
-                         new PermissionItem{ M=ModuleName.产品中心, P=PermissionName.新建},
-                          new PermissionItem{ M=ModuleName.关于我们, P=PermissionName.新建}
+                    Permissions = JsonConvert.SerializeObject(new List<PermissionClaim>() {
+                         new PermissionClaim{ M=Modules.产品中心, P=Operations.新建},
+                          new PermissionClaim{ M=Modules.关于我们, P=Operations.新建}
                     }),
                     Users = new List<UserRole>()
                     {

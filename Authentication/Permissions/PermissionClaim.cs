@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace Authentication.Permissions
 {
-    public class PermissionItem
+    public class PermissionClaim
     {
-        public ModuleName M { get; set; }
-        public PermissionName P { get; set; }
+        public Modules M { get; set; }
+        public Operations P { get; set; }
     }
 }

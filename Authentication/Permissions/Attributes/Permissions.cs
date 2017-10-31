@@ -9,6 +9,6 @@ namespace Authentication.Permissions
 
     public class Permission : Attribute
     {
-        public PermissionName Name { get; set; }
+        public Operations Name { get; set; }
     }
 }

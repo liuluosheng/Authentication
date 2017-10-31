@@ -8,6 +8,6 @@ namespace Authentication.Permissions
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class Module : Attribute
     {
-        public ModuleName Name { get; set; }
+        public Modules Name { get; set; }
     }
 }

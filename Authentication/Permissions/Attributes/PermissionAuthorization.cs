@@ -11,14 +11,15 @@ namespace Authentication.Permissions
 {
     public class PermissionRequirement : IAuthorizationRequirement
     {
-        public ModuleName ModuleName { get; private set; }
-        public PermissionName PermissionName { get; private set; }
+        public Modules ModuleName { get; private set; }
+        public Operations PermissionName { get; private set; }
 
-        public PermissionRequirement(ModuleName moduleName, PermissionName permissionName)
+        public PermissionRequirement(Modules moduleName, Operations permissionName)
         {
             ModuleName = moduleName;
             PermissionName = permissionName;
         }
+       
     }
     public class PermissionHandler : AuthorizationHandler<PermissionRequirement>
     {
@@ -27,7 +28,7 @@ namespace Authentication.Permissions
 
             foreach (var claim in context.User.Claims.Where(p => p.Type == "Permission"))
             {
-                PermissionItem permission = JsonConvert.DeserializeObject<PermissionItem>(claim.Value);
+                PermissionClaim permission = JsonConvert.DeserializeObject<PermissionClaim>(claim.Value);
                 if (permission.M == requirement.ModuleName && permission.P == requirement.PermissionName)
                 {
                     context.Succeed(requirement);
