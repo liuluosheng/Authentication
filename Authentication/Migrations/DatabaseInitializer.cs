@@ -33,15 +33,15 @@ namespace Authentication.Data
             {
                 Guid userId = Guid.NewGuid();
                 Guid roleId = Guid.NewGuid();
-                await _context.Users.AddAsync(new User { Id = userId, Email = "luosheng.liu@worthtec.com", Mobile = "13534138066", Name = "刘罗生" ,PassWord="1234567" });
+                await _context.Users.AddAsync(new User { Id = userId, Email = "luosheng.liu@worthtec.com", Mobile = "13534138066", Name = "刘罗生", PassWord = "1234567" });
                 await _context.Roles.AddAsync(new Role
                 {
                     Id = roleId,
                     Name = "Admin",
                     CreatedDate = DateTime.Now,
-                    Permissions = JsonConvert.SerializeObject(new List<PermissionClaim>() {
-                         new PermissionClaim{ M=Modules.产品中心, P=Operations.新建},
-                          new PermissionClaim{ M=Modules.关于我们, P=Operations.新建}
+                    Permissions = JsonConvert.SerializeObject(new Dictionary<Modules, Operations> {
+                         { Modules.产品中心, Operations.Read},
+                         { Modules.关于我们, Operations.Read}
                     }),
                     Users = new List<UserRole>()
                     {

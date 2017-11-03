@@ -27,7 +27,7 @@ namespace Authentication.Pages
         {
         }
 
-        public async Task<IActionResult> OnPost(UserLogin user, string ReturnUrl)
+        public async Task<IActionResult> OnPost(UserLogin user, string ReturnUrl = "\\")
         {
             var model = await _userService.Entities.Include("Roles.Role")
                 .FirstOrDefaultAsync(p => (p.Name == user.Name || p.Mobile == user.Name) && p.PassWord == user.PassWord);
@@ -39,10 +39,11 @@ namespace Authentication.Pages
                 {
                     claims.AddClaim(new Claim(ClaimTypes.Role, p.Role.Name, ClaimValueTypes.String, ClaimsIdentity.DefaultIssuer)); //角色授权
                 }
-                var permisson = model.Roles.Select(p => JsonConvert.DeserializeObject<List<PermissionClaim>>(p.Role.Permissions)).Distinct();
+                var permisson = model.Roles.Select(p => JsonConvert.DeserializeObject<Dictionary<Modules, Operations>>(p.Role.Permissions)).SelectMany(p => p).Distinct();
+
                 foreach (var p in permisson)
                 {
-                    claims.AddClaim(new Claim("Permission", JsonConvert.SerializeObject(p), ClaimValueTypes.String, ClaimsIdentity.DefaultIssuer)); //操作授权
+                    claims.AddClaim(new Claim(p.Key.ToString(), p.Value.ToString(), ClaimValueTypes.String, ClaimsIdentity.DefaultIssuer)); //操作授权
                 }
                 await HttpContext.SignInAsync(Startup.AuthenticationSchemeName, new ClaimsPrincipal(claims), new AuthenticationProperties
                 {

@@ -4,15 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Authentication.Permissions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Authentication.Pages
 {
-    [Module(Name = Modules.关于我们)]
+    // [Permission(Modules.关于我们, Operations.Delete)]
+    [ClaimRequirement(Modules.关于我们, Operations.Read)]
     public class AboutModel : PageModel
     {
         public string Message { get; set; }
-
-        [Permission(Name = Operations.新建)]
         public void OnGet()
         {
             Message = "Your application description page.";

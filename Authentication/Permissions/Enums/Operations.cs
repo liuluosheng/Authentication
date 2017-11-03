@@ -7,8 +7,9 @@ namespace Authentication.Permissions
 {
     public enum Operations
     {
-        新建,
-        更新,
-        删除
+        Read,
+        Update,
+        Create,
+        Delete
     }
 }

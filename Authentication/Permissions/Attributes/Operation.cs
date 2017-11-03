@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace Authentication.Permissions
 {
-    public class PermissionClaim
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+
+    public class Operation : Attribute
     {
-        public Modules M { get; set; }
-        public Operations P { get; set; }
+        public Operations Name { get; set; }
     }
 }

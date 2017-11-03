@@ -43,7 +43,11 @@ namespace Authentication
              });
             services.AddAuthorization(option =>
             {
-                
+
+                option.AddPolicy("Permission", policyBuilder =>
+                {
+                    policyBuilder.Requirements.Add(new PermissionAuthorizationRequirement());
+                });
             });
             services.AddMvc(options =>
             {
@@ -53,7 +57,7 @@ namespace Authentication
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddTransient<IDatabaseInitializer, DatabaseInitializer>();
 
-            services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
+            services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,7 +82,7 @@ namespace Authentication
             //创建种子数据
             try
             {
-                databaseInitalizer.SeedAsync().Wait();
+                  databaseInitalizer.SeedAsync().Wait();
             }
             catch
             {

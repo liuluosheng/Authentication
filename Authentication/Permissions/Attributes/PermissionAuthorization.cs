@@ -1,43 +1,62 @@
 ﻿
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Authentication.Permissions
 {
-    public class PermissionRequirement : IAuthorizationRequirement
+    //自定义授权策略
+    public class PermissionAuthorizationRequirement : IAuthorizationRequirement
     {
-        public Modules ModuleName { get; private set; }
-        public Operations PermissionName { get; private set; }
 
-        public PermissionRequirement(Modules moduleName, Operations permissionName)
-        {
-            ModuleName = moduleName;
-            PermissionName = permissionName;
-        }
-       
     }
-    public class PermissionHandler : AuthorizationHandler<PermissionRequirement>
+    public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionAuthorizationRequirement>
     {
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionAuthorizationRequirement requirement)
         {
-
-            foreach (var claim in context.User.Claims.Where(p => p.Type == "Permission"))
-            {
-                PermissionClaim permission = JsonConvert.DeserializeObject<PermissionClaim>(claim.Value);
-                if (permission.M == requirement.ModuleName && permission.P == requirement.PermissionName)
-                {
-                    context.Succeed(requirement);
-                    return Task.CompletedTask;
-                }
-            }
-
-            context.Fail();
+            //if (true)
+            //{
+            //    context.Succeed(requirement);
+            //    return Task.CompletedTask;
+            //}
+            // context.Fail();
             return Task.CompletedTask;
         }
     }
+    // 使用过滤器授权
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true)]
+    public class ClaimRequirementAttribute : TypeFilterAttribute
+    {
+        public ClaimRequirementAttribute(Modules moduleName, Operations operationName) : base(typeof(ClaimRequirementFilter))
+        {
+            Arguments = new object[] { new Claim(moduleName.ToString(), operationName.ToString()) };
+        }
+    }
+
+    public class ClaimRequirementFilter : IAuthorizationFilter
+    {
+        readonly Claim _claim;
+        public ClaimRequirementFilter(Claim claim)
+        {
+            _claim = claim;
+        }
+
+        public void OnAuthorization(AuthorizationFilterContext context)
+        {
+            var hasClaim = context.HttpContext.User.Claims.Any(c => c.Type == _claim.Type && c.Value == _claim.Value);
+            if (!hasClaim)
+            {
+                context.Result = new ForbidResult();
+            }
+        }
+    }
 }
+
