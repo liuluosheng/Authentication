@@ -51,10 +51,19 @@ namespace Authentication.Permissions
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            var hasClaim = context.HttpContext.User.Claims.Any(c => c.Type == _claim.Type && c.Value == _claim.Value);
-            if (!hasClaim)
+            if (!context.HttpContext.User.Identity.IsAuthenticated)
             {
-                context.Result = new ForbidResult();
+                // to login page
+                context.Result = new ChallengeResult();
+            }
+            else
+            {
+                var hasClaim = context.HttpContext.User.Claims.Any(c => c.Type == _claim.Type && c.Value.Split(",").Contains(_claim.Value));
+                if (!hasClaim)
+                {
+                    // to denied page
+                    context.Result = new ForbidResult();
+                }
             }
         }
     }

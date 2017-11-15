@@ -7,6 +7,7 @@ namespace Authentication.Permissions
 {
     public enum Operations
     {
+
         Read,
         Update,
         Create,

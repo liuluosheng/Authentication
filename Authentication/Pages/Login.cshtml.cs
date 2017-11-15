@@ -39,11 +39,11 @@ namespace Authentication.Pages
                 {
                     claims.AddClaim(new Claim(ClaimTypes.Role, p.Role.Name, ClaimValueTypes.String, ClaimsIdentity.DefaultIssuer)); //角色授权
                 }
-                var permisson = model.Roles.Select(p => JsonConvert.DeserializeObject<Dictionary<Modules, Operations>>(p.Role.Permissions)).SelectMany(p => p).Distinct();
+                var permisson = model.Roles.Select(p => JsonConvert.DeserializeObject<Dictionary<Modules, Operations[]>>(p.Role.Permissions)).SelectMany(p => p).Distinct();
 
                 foreach (var p in permisson)
                 {
-                    claims.AddClaim(new Claim(p.Key.ToString(), p.Value.ToString(), ClaimValueTypes.String, ClaimsIdentity.DefaultIssuer)); //操作授权
+                    claims.AddClaim(new Claim(p.Key.ToString(), string.Join(",", p.Value), ClaimValueTypes.String, ClaimsIdentity.DefaultIssuer)); //操作授权
                 }
                 await HttpContext.SignInAsync(Startup.AuthenticationSchemeName, new ClaimsPrincipal(claims), new AuthenticationProperties
                 {

@@ -8,6 +8,7 @@ namespace Authentication.Permissions
     public enum Modules
     {
         关于我们,
-        产品中心
+        产品中心,
+        用户中心
     }
 }
