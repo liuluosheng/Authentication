@@ -1,4 +1,5 @@
 ﻿
+using Authentication.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
@@ -7,11 +8,10 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Authentication.Permissions
+namespace Authentication.Filters
 {
     //自定义授权策略
     public class PermissionAuthorizationRequirement : IAuthorizationRequirement
@@ -35,7 +35,7 @@ namespace Authentication.Permissions
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true)]
     public class ClaimRequirementAttribute : TypeFilterAttribute
     {
-        public ClaimRequirementAttribute(Modules moduleName, Operations operationName) : base(typeof(ClaimRequirementFilter))
+        public ClaimRequirementAttribute(Module moduleName, Operation operationName) : base(typeof(ClaimRequirementFilter))
         {
             Arguments = new object[] { new Claim(moduleName.ToString(), operationName.ToString()) };
         }

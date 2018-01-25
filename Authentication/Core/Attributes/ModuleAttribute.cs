@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Authentication.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Authentication.Permissions
+namespace Authentication.Attributes
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-    public class Module : Attribute
+    public class ModuleAttribute : Attribute
     {
-        public Modules Name { get; set; }
+        public Module Name { get; set; }
     }
 }

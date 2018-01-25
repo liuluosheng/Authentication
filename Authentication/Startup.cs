@@ -13,8 +13,9 @@ using Microsoft.EntityFrameworkCore;
 using Authentication.Data;
 using Core.IRepository;
 using Data.Repository;
-using Authentication.Permissions;
 using Microsoft.AspNetCore.Authorization;
+using Authentication.Filters;
+using Authentication.Core.Filters;
 
 namespace Authentication
 {
@@ -41,22 +42,20 @@ namespace Authentication
                  op.AccessDeniedPath = "/Denied";
                  op.LoginPath = "/Login";
              });
-            services.AddAuthorization(option =>
-            {
-
-                option.AddPolicy("Permission", policyBuilder =>
-                {
-                    policyBuilder.Requirements.Add(new PermissionAuthorizationRequirement());
-                });
-            });
+            //services.AddAuthorization(option =>
+            //{
+            //    option.AddPolicy("Permission", policyBuilder =>
+            //    {
+            //        policyBuilder.Requirements.Add(new PermissionAuthorizationRequirement());
+            //    });
+            //});
             services.AddMvc(options =>
             {
-
+                //options.Filters.Add(new InternalAuthorizeFilter());
             });
             services.AddScoped<DbContext, ApplicationDbContext>();
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddTransient<IDatabaseInitializer, DatabaseInitializer>();
-
             services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
         }
 
@@ -82,7 +81,7 @@ namespace Authentication
             //创建种子数据
             try
             {
-                  databaseInitalizer.SeedAsync().Wait();
+                databaseInitalizer.SeedAsync().Wait();
             }
             catch
             {

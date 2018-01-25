@@ -1,4 +1,5 @@
-﻿using Authentication.Permissions;
+﻿
+using Authentication.Enums;
 using Data;
 using Data.Entitys;
 using Microsoft.EntityFrameworkCore;
@@ -40,9 +41,10 @@ namespace Authentication.Data
                     Id = roleId,
                     Name = "Admin",
                     CreatedDate = DateTime.Now,
-                    Permissions = JsonConvert.SerializeObject(new Dictionary<Modules, Operations[]> {
-                         { Modules.产品中心,new []{ Operations.Read } },
-                         { Modules.关于我们, new[]{ Operations.Read,Operations.Create } }
+                    Permissions = JsonConvert.SerializeObject(new Dictionary<Module, Operation> {
+                         { Module.产品中心,Operation.查询 },
+                         { Module.用户中心,Operation.创建 | Operation.删除 },
+                         { Module.关于我们,  Operation.查询 | Operation.创建  }
                     }, new StringEnumConverter()),
                     Users = new List<UserRole>()
                     {

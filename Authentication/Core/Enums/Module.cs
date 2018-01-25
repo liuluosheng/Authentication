@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Authentication.Permissions
+namespace Authentication.Enums
 {
-    public enum Modules
+    public enum Module
     {
         关于我们,
         产品中心,
