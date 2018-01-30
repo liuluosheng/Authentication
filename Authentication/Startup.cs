@@ -14,8 +14,7 @@ using Authentication.Data;
 using Core.IRepository;
 using Data.Repository;
 using Microsoft.AspNetCore.Authorization;
-using Authentication.Filters;
-using Authentication.Core.Filters;
+using Authentication.Core.Authorization;
 
 namespace Authentication
 {
@@ -42,13 +41,13 @@ namespace Authentication
                  op.AccessDeniedPath = "/Denied";
                  op.LoginPath = "/Login";
              });
-            //services.AddAuthorization(option =>
-            //{
-            //    option.AddPolicy("Permission", policyBuilder =>
-            //    {
-            //        policyBuilder.Requirements.Add(new PermissionAuthorizationRequirement());
-            //    });
-            //});
+            services.AddAuthorization(option =>
+            {
+                option.AddPolicy("OperationPolicy", policyBuilder =>
+                {
+                    policyBuilder.Requirements.Add(new OperationAuthorizationRequirement());
+                });
+            });
             services.AddMvc(options =>
             {
                 //options.Filters.Add(new InternalAuthorizeFilter());
@@ -56,7 +55,7 @@ namespace Authentication
             services.AddScoped<DbContext, ApplicationDbContext>();
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddTransient<IDatabaseInitializer, DatabaseInitializer>();
-            services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
+            services.AddSingleton<IAuthorizationHandler, OperationAuthorizationHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

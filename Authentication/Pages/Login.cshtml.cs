@@ -43,7 +43,6 @@ namespace Authentication.Pages
                     claims.AddClaim(new Claim(ClaimTypes.Role, p.Role.Name, ClaimValueTypes.String, ClaimsIdentity.DefaultIssuer)); //角色授权
                 }
                 var permisson = model.Roles.Select(p => JsonConvert.DeserializeObject<Dictionary<Module, Operation>>(p.Role.Permissions)).SelectMany(p => p).Distinct();
-
                 foreach (var p in permisson)
                 {
                     claims.AddClaim(new Claim(p.Key.ToString(), p.Value.ToString(), ClaimValueTypes.String, ClaimsIdentity.DefaultIssuer)); //操作授权
