@@ -9,19 +9,19 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Authentication.Models;
-using Core.IRepository;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Authentication.Enums;
 using Microsoft.AspNetCore.Authorization;
+using Core.IServices;
 
 namespace Authentication.Pages
 {
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
-        private IBaseRepository<User> _userService;
-        public LoginModel(IBaseRepository<User> userService)
+        private IBaseService<User> _userService;
+        public LoginModel(IBaseService<User> userService)
         {
             _userService = userService;
         }
@@ -32,6 +32,7 @@ namespace Authentication.Pages
 
         public async Task<IActionResult> OnPost(UserLogin user, string ReturnUrl = "\\")
         {
+
             var model = await _userService.Entities.Include("Roles.Role")
                 .FirstOrDefaultAsync(p => (p.Name == user.Name || p.Mobile == user.Name) && p.PassWord == user.PassWord);
             if (model != null)
@@ -45,7 +46,7 @@ namespace Authentication.Pages
                 var permisson = model.Roles.Select(p => JsonConvert.DeserializeObject<Dictionary<Module, Operation>>(p.Role.Permissions)).SelectMany(p => p).Distinct();
                 foreach (var p in permisson)
                 {
-                    claims.AddClaim(new Claim(p.Key.ToString(), p.Value.ToString(), ClaimValueTypes.String, ClaimsIdentity.DefaultIssuer)); //操作授权
+                    claims.AddClaim(new Claim(p.Key.ToString(), p.Value.ToString(), ClaimValueTypes.String)); //操作授权
                 }
                 await HttpContext.SignInAsync(Startup.AuthenticationSchemeName, new ClaimsPrincipal(claims), new AuthenticationProperties
                 {

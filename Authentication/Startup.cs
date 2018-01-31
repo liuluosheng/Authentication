@@ -11,10 +11,12 @@ using Microsoft.Extensions.Logging;
 using Data;
 using Microsoft.EntityFrameworkCore;
 using Authentication.Data;
-using Core.IRepository;
 using Data.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Authentication.Core.Authorization;
+using Data.Repository.Interface;
+using Core.IServices;
+using Core.Service;
 
 namespace Authentication
 {
@@ -54,6 +56,7 @@ namespace Authentication
             });
             services.AddScoped<DbContext, ApplicationDbContext>();
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
             services.AddTransient<IDatabaseInitializer, DatabaseInitializer>();
             services.AddSingleton<IAuthorizationHandler, OperationAuthorizationHandler>();
         }

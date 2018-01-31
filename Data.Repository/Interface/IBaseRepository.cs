@@ -5,7 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Core.IRepository
+namespace Data.Repository.Interface
 {
     /// <summary>
     /// 实体仓储模型的数据标准操作
@@ -21,7 +21,7 @@ namespace Core.IRepository
 
         #region 方法
 
-        IQueryable<T> OtherEntities<T>() where T : EntityBase;
+        //IQueryable<T> DbSet<T>() where T : EntityBase;
         Task<List<TEntity>> ToListAsync(Expression<Func<TEntity, bool>> predicate);
         /// <summary>
         /// 插入实体

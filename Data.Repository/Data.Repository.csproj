@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Core.IRepository\Core.IRepository.csproj" />
+    <ProjectReference Include="..\Data\Data.Entitys.csproj" />
   </ItemGroup>
 
 </Project>

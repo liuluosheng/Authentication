@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Data.Entitys;
-using Core.IRepository;
+using Data.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repository
@@ -30,7 +30,7 @@ namespace Data.Repository
             get { return _dbSet; }
         }
 
-        public IQueryable<T> OtherEntities<T>() where T : EntityBase
+        protected IQueryable<T> DbSet<T>() where T : EntityBase
         {
             return _context.Set<T>();
         }

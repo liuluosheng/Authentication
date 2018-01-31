@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.3
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication", "Authentication\Authentication.csproj", "{ACE7BDD4-1EE8-4B98-9E4A-C93495A33B77}"
 EndProject
@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Entitys", "Data\Data.E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Repository", "Data.Repository\Data.Repository.csproj", "{73003DBC-1011-40B9-AD78-42C5CB2B0D1C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.IRepository", "Core.IRepository\Core.IRepository.csproj", "{45DC2A18-96CF-4B0F-A54F-7DD25DFE0050}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.IServices", "Core.IRepository\Core.IServices.csproj", "{45DC2A18-96CF-4B0F-A54F-7DD25DFE0050}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Services", "Core.Services\Core.Services.csproj", "{9C74A4AA-A312-4CC8-B740-5D4BE6BBD90B}"
 EndProject
@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{F906D49C-C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utility", "Utility", "{4A43AB2E-CC13-483E-97F1-116A527BE154}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilitys", "Utility.Class\Utilitys.csproj", "{245FAF7D-4DB9-4B65-961C-11B0E2FB4D75}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utilitys", "Utility.Class\Utilitys.csproj", "{245FAF7D-4DB9-4B65-961C-11B0E2FB4D75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
