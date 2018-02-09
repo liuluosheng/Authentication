@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 namespace Data.Entitys
 {
-    public class Role : EntityBase
+    public class Role : IdentityRole
     {
-        public string Name { get; set; }
         public string Permissions { get; set; }
 
-        public virtual ICollection<UserRole> Users { get; set; }
+        
     }
 }

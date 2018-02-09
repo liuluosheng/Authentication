@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 namespace Data.Entitys
 {
-    public class User : EntityBase
+    public class User : IdentityUser
     {
-        public string Name { get; set; }
-        public string PassWord { get; set; }
-        public string Mobile { get; set; }
-        public string Email { get; set; }
-        public virtual ICollection<UserRole> Roles { get; set; }
+
     }
 }
